@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ExpenseFilter from "../Filter/ExpenseFilter";
 import "./InputField.css";
 
 function InputField(props) {
@@ -29,7 +30,7 @@ function InputField(props) {
         <input type="date" placeholder="Date"   onChange={(e)=> Fdate(e.target.value)} />
         <input type="number" placeholder="Price"  onChange={(e)=> Fprice(e.target.value)} />
       </div>
-
+      <ExpenseFilter/>
       <button onClick={onInputBtuuonHandler} className="InputField-btn">Submit</button>
     </div>
   );
