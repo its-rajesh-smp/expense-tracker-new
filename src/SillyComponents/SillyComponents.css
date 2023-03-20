@@ -1,0 +1,49 @@
+.Date-div{
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+    background-color: aquamarine;
+    border: 5px solid violet;
+    margin: 5px;
+    justify-self: center;
+}
+.Date-div p{
+    padding: 5px;
+}
+
+
+/* ========================================================== */
+
+.Name-div{
+    justify-self: center;
+    align-self: center;
+    background-color: aqua;
+    padding: 20px;
+    border: 5px solid blueviolet;
+}
+
+
+/* ========================================================== */
+
+.Price-div{
+    justify-self: center;
+    align-self: center;
+    background-color: wheat;
+    padding: 20px;
+    border: 5px solid red;
+}
+
+/* ========================================================== */
+.EditButton-btn{
+    margin: 0px auto;
+    width: 30px;
+    height: 30px;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    border: 5px solid green;
+}
