@@ -92,6 +92,11 @@ function App() {
             id={i /*Id For Delete Data */}
           />
         ))}
+
+        {newArrayAfterFilter.length===0 ? <h1>No Expense Found</h1> : <></>}
+        {newArrayAfterFilter.length===1 ? <h1>Add More Only One Present</h1> : <></>}
+
+
       </Container>
     </div>
   );
