@@ -11,7 +11,6 @@ function Date(props) {
 }
 
 
-
 function Name(props){
     return (
         <div className="Name-div">
@@ -30,10 +29,28 @@ function Price(props){
 }
 
 
-function EditButton(props){
+function DeleteButton(props){
+    //Sending  List Id To The Parent App.js When Btn Clicked
     return (
-        <button className="EditButton-btn" >Edit</button>
+        <button onClick={()=>{props.onDelete(props.listID)}} className="DeleteButton-btn" >Delete</button>
     )
 }
 
-export { Date,Name,Price,EditButton };
+
+function EditButton(props){
+    return (
+        <button onClick={()=>props.onEdit(props.listID)} className="EditButton-btn" >Edit</button>
+    )
+}
+
+
+
+
+function AddHoverBtn(props){
+    //Triggure The onTriggerInput in App.js
+    return (
+        <button onClick={props.onTriggerInput} className="AddHoverBtn-div"> + </button>
+    )
+}
+
+export { Date,Name,Price,DeleteButton,EditButton,AddHoverBtn };

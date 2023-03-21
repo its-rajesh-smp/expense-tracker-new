@@ -6,7 +6,7 @@ let ARRAY_OF_DATA = [
   },
   {
     name: "Panjabi",
-    date: "2012-05-06",
+    date: "2011-05-06",
     price: "300",
   },
   {
@@ -16,7 +16,7 @@ let ARRAY_OF_DATA = [
   },
   {
     name: "Food",
-    date: "2012-05-06",
+    date: "2011-05-06",
     price: "5",
   },
   {

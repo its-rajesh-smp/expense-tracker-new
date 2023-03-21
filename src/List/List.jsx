@@ -1,5 +1,5 @@
 import React from "react";
-import { Date,Name,Price,EditButton } from "../SillyComponents/SillyComponents";
+import { Date,Name,Price,DeleteButton,EditButton } from "../SillyComponents/SillyComponents";
 import "./List.css"
 
 function List(props){
@@ -8,7 +8,8 @@ function List(props){
             <Date date={props.date} />
             <Name name={props.name}/>
             <Price price={props.price} />
-            <EditButton/>
+            <DeleteButton onDelete={props.onDelete} listID={props.id /**List Id Passed */} />
+            <EditButton onEdit={props.onEdit} listID={props.id} />
         </div>
     )
 }
