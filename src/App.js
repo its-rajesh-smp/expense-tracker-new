@@ -15,7 +15,7 @@ function App() {
 
   //Data Flow-->   ARRAY-OF-DATA >>>>>> DATA-STATE >>>>> NEW-VALUE-AFTER-FILTER >>>>>> container_newvalue.map()
   //! Due to this delete function is not working
-  const[getFilterValue,setFilterValue]=useState("ALL")
+  const[getFilterValue,setFilterValue]=useState("2023")
   function FilterData(e){
     setFilterValue(e)
   }
