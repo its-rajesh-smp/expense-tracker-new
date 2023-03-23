@@ -1,0 +1,11 @@
+.Chart-div{
+    margin: 10px auto;
+    width: 800px;
+    height: 200px;
+    background-color: aquamarine;
+    border: 1px solid black;
+    display: grid;
+    grid-template-columns: repeat(12,1fr);
+    gap: 5px;
+    transform: rotateX(180deg);
+}

@@ -4,6 +4,7 @@ import Container from "./Container/Container";
 import List from "./List/List";
 import { AddHoverBtn } from "./SillyComponents/SillyComponents";
 import ExpenseFilter from "./Filter/ExpenseFilter";
+import Chart from "./Charts/Chart";
 
 function App() {
   //! Get Data From LocalStorage
@@ -24,7 +25,7 @@ function App() {
     setyearForSearch(e); //Seting Year 📅 for search 🔍 in the basis of year📅
 
     let FilteredYearData = STORAGEDATA.filter((value) => {
-      if (e == "ALL" || e == value.date.split("-")[0]) {
+      if (e === "ALL" || e === value.date.split("-")[0]) {
         return value;
       }
     });
@@ -35,10 +36,10 @@ function App() {
   function getSearchFilterData(e) {
     let FilteredSearchData = STORAGEDATA.filter((value) => {
       if (
-        (yearForSearch == "ALL" || value.date.split("-")[0] == yearForSearch) &&
+        (yearForSearch === "ALL" || value.date.split("-")[0] === yearForSearch) &&
         (e === "" ||
-          e == value.date.split("-")[1] ||
-          e == value.date.split("-")[2] ||
+          e === value.date.split("-")[1] ||
+          e === value.date.split("-")[2] ||
           value.name.toLowerCase().includes(e.toLowerCase()) ||
           value.price.includes(e))
       ) {
@@ -81,7 +82,7 @@ function App() {
 
     // Creating New Array to update dom without deleted item 🛢️
     let newArrayAfterDelete = DATASET.filter((value) => {
-      if (value.key != e) {
+      if (value.key !== e) {
         return value;
       }
     });
@@ -115,7 +116,7 @@ function App() {
 
     // Generating New Data Array after filter without previous raw un-edited data
     let newUpdatedArray = DATASET.filter((value) => {
-      if (value.key != editValue.key) {
+      if (value.key !== editValue.key) {
         return value;
       }
     });
@@ -145,6 +146,8 @@ function App() {
         onYearFilter={getFilterInput}
         onSearchFilter={getSearchFilterData}
       />
+      {/* 👍👍👍👍👍👍👍 RenderEvertime Whenever App Component reload */}
+      <Chart data={DATASET}/>
 
       <Container>
         {DATASET.map((value, i) => (
@@ -162,6 +165,9 @@ function App() {
           />
         ))}
       </Container>
+
+
+
     </div>
   );
 }

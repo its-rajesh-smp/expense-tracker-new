@@ -1,0 +1,7 @@
+.ChartBar-div{
+    background-color: rgb(46, 95, 95);
+    display: flex;
+    transform: rotateX(180deg);
+    align-items: flex-end;
+    justify-content: center;
+}

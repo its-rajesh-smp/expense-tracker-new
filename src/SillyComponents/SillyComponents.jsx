@@ -1,11 +1,16 @@
 import React from "react";
 import "./SillyComponents.css";
 
-function Date(props) {
+
+function DATE(props) {
+ 
+  // Not Working Because This is not updating WE HAVE TO USE STATE HERE
+
   return (
     <div className="Date-div">
       <p>{props.date}</p>
-      <p>Sunday</p>
+      <p style={{fontSize:"20px"}} >{new Date(props.date).toDateString().split(" ")[1]}</p>
+      <p style={{fontSize:"30px"}} >{new Date(props.date).toDateString().split(" ")[0]}</p>
     </div>
   );
 }
@@ -67,4 +72,4 @@ function AddHoverBtn(props) {
   );
 }
 
-export { Date, Name, Price, DeleteButton, EditButton, AddHoverBtn };
+export { DATE, Name, Price, DeleteButton, EditButton, AddHoverBtn };
