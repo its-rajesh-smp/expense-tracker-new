@@ -2,101 +2,165 @@ import React, { useState } from "react";
 import InputField from "./InputField/InputField";
 import Container from "./Container/Container";
 import List from "./List/List";
-import ARRAY_OF_DATA from "./ArrayOfData";
 import { AddHoverBtn } from "./SillyComponents/SillyComponents";
-import ExpenseFilter from "./Filter/ExpenseFilter"
-
+import ExpenseFilter from "./Filter/ExpenseFilter";
 
 function App() {
-  // Data With Changing State Function Link With ARRAY_OF_DATA
-  let [DATA, setARRAY_OF_DATA] = useState(ARRAY_OF_DATA);
+  //! Get Data From LocalStorage
+  let key = Object.keys(localStorage);
+  let STORAGEDATA = key.map((value) => {
+    return JSON.parse(localStorage.getItem(value));
+  });
 
+  //! Updating DOM with data form localStorage
+  const [DATASET, DATASET_FUNC] = useState(STORAGEDATA);
 
+  //! Setting Year For Search on the basis of that particular year 📅
+  const [yearForSearch, setyearForSearch] = useState("ALL");
 
-  //Data Flow-->   ARRAY-OF-DATA >>>>>> DATA-STATE >>>>> NEW-VALUE-AFTER-FILTER >>>>>> container_newvalue.map()
-  //! Due to this delete function is not working
-  const[getFilterValue,setFilterValue]=useState("2023")
-  function FilterData(e){
-    setFilterValue(e)
+  //! Filter
+  // Filter By Year 🤲🤲🤲🤲🤲🤲🤲
+  function getFilterInput(e) {
+    setyearForSearch(e); //Seting Year 📅 for search 🔍 in the basis of year📅
+
+    let FilteredYearData = STORAGEDATA.filter((value) => {
+      if (e == "ALL" || e == value.date.split("-")[0]) {
+        return value;
+      }
+    });
+    DATASET_FUNC(FilteredYearData);
   }
-  let newArrayAfterFilter=DATA.filter((value)=>{
-    if(value.date.split("-")[0]===getFilterValue){return value}
-  })
 
+  // Filter By Search on that particular Year 🤲🤲🤲🤲🤲🤲🤲 📅+🔍
+  function getSearchFilterData(e) {
+    let FilteredSearchData = STORAGEDATA.filter((value) => {
+      if (
+        (yearForSearch == "ALL" || value.date.split("-")[0] == yearForSearch) &&
+        (e === "" ||
+          e == value.date.split("-")[1] ||
+          e == value.date.split("-")[2] ||
+          value.name.toLowerCase().includes(e.toLowerCase()) ||
+          value.price.includes(e))
+      ) {
+        return value;
+      }
+    });
+    DATASET_FUNC(FilteredSearchData);
+  }
 
-  //Function With Changing State Function Link With InputField
+  //! ON BUTTON SUBMIT function With Changing State Function Link With InputField
   function onButtonSubmitGetData(newCreatedExpense) {
-    setARRAY_OF_DATA((prevArray) => {
-      return [newCreatedExpense, ...prevArray];
+    // Generating Key 🔑
+    let generateKey = Math.random();
+
+    // Also passing the key as value to the localStorage Object
+    newCreatedExpense.key = generateKey;
+    // Setting Value in localStorage 🔀🔀🔀
+    localStorage.setItem(generateKey, JSON.stringify(newCreatedExpense));
+
+    // Updating DOM 🛢️
+    DATASET_FUNC((prev) => {
+      return [newCreatedExpense, ...prev];
     });
   }
 
+  //! InputField trigger
   // AddHoverBtn-Button Click InputField trigger
-  const[triggerInputField,triggerInputFieldFunc]=useState(false)
+  const [triggerInputField, triggerInputFieldFunc] = useState(false);
 
-  //Close InputField Child-top flow Usign Function
-  const closeInputFieldFunc=()=>{triggerInputFieldFunc(false)}
+  // Close InputField Child ➡️ Parent flow Usign Function
+  const closeInputFieldFunc = () => {
+    triggerInputFieldFunc(false);
+  };
 
+  //! Delete on Btn Click
+  // Getting Key From List to delete from localstorage Child ➡️ Parent flow Usign Function
+  function deleteListItemHandeler(e) {
+    // Delete Item From LocalStorage
+    localStorage.removeItem(e);
 
-  //Btn Click On Delete
-  function deleteListItem(e){
-    //Creating New Array Of New Data
-    console.log(e);
+    // Creating New Array to update dom without deleted item 🛢️
+    let newArrayAfterDelete = DATASET.filter((value) => {
+      if (value.key != e) {
+        return value;
+      }
+    });
 
-    let newDataAfterDelete=DATA.filter((value,i)=>{
-      if(i!=e){return value}
-    })
-    //Sending Data to useState hook of DATA
-    setARRAY_OF_DATA(newDataAfterDelete)
+    // Pass New Data After Delete to DATASET_FUNC
+    DATASET_FUNC(newArrayAfterDelete);
   }
 
+  //! Edit on Btn Click
+  //set Value in item fields
+  const [editableData, setEditableData] = useState({
+    name: "",
+    date: "",
+    price: "",
+  });
 
-  //! A State That mannage the inputfield📃📃📃
-  /**
-   * 📃📃📃📃
-   * As We cannot pass getEditData from editListItem to the InputField
-   * Just Beacuse of it getEditData is a parameter of a function and we can't access it outside
-   * We Can create a state and we can pass it to the InputField
-   * Whenever someone Click on the edit button we can call that state's setgetEditData funtion to update/pass the value to the InputField component
-   */
-  const[setEditInputField_DATA,setEditInputFieldData_FUNC]=useState("")
-
-  // Btn Click On Edit
-  //getEditData <== Geting Id of list when someone Click on Edit Btn
-  function editListItem(getEditData){
-    triggerInputFieldFunc(true) // Trigger That InputFild AddInputField
-    setEditInputFieldData_FUNC(DATA[getEditData]) //Pass Data to Input Field via state variable
+  // Run When Edit Button click
+  function editListItemHandeler(e) {
+    // When edit button clicked setting the key ass well seting the work to do to handle the normal submit and edit
+    setEditableData({
+      listKey: e,
+      work: "___EDIT___",
+      ...JSON.parse(localStorage.getItem(e)),
+    });
   }
-  
-  
 
+  //! Run When Submit Button click on edit we will get value after edit
+  function onButtonSubmitEditData(editValue) {
+    // Replace Data in localstorage
+    localStorage.setItem(editValue.key, JSON.stringify(editValue));
 
+    // Generating New Data Array after filter without previous raw un-edited data
+    let newUpdatedArray = DATASET.filter((value) => {
+      if (value.key != editValue.key) {
+        return value;
+      }
+    });
+
+    // Update the dom with new updated data array + Finished Edited Data
+    DATASET_FUNC([editValue, ...newUpdatedArray]);
+  }
 
   return (
     <div>
-      <AddHoverBtn onTriggerInput={()=>{triggerInputFieldFunc(true)}} />
+      <AddHoverBtn
+        onHoverBtnClick={() => {
+          triggerInputFieldFunc(true);
+        }}
+      />
 
-      {triggerInputField  && <InputField onButtonEdit={setEditInputField_DATA}  onButtonSubmit={onButtonSubmitGetData}  onCloseInput={closeInputFieldFunc} />}
+      {triggerInputField && (
+        <InputField
+          dataForEdit={editableData}
+          onButtonEdit={onButtonSubmitEditData}
+          onButtonSubmit={onButtonSubmitGetData}
+          onCloseInput={closeInputFieldFunc}
+        />
+      )}
 
-      <ExpenseFilter onFilter={FilterData}/>
+      <ExpenseFilter
+        onYearFilter={getFilterInput}
+        onSearchFilter={getSearchFilterData}
+      />
 
       <Container>
-        {newArrayAfterFilter.map((value, i) => (
+        {DATASET.map((value, i) => (
           <List
-            onDelete={deleteListItem}
-            onEdit={editListItem}
+            onDelete={deleteListItemHandeler}
             date={value.date}
             name={value.name}
             price={value.price}
-            key={i}
-            id={i /*Id For Delete Data */}
+            key={value.key}
+            id={value.key}
+            onEdit={() => {
+              triggerInputFieldFunc(true);
+            }}
+            getEditableData={editListItemHandeler}
           />
         ))}
-
-        {newArrayAfterFilter.length===0 ? <h1>No Expense Found</h1> : <></>}
-        {newArrayAfterFilter.length===1 ? <h1>Add More Only One Present</h1> : <></>}
-
-
       </Container>
     </div>
   );

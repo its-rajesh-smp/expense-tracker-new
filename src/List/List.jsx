@@ -3,13 +3,15 @@ import { Date,Name,Price,DeleteButton,EditButton } from "../SillyComponents/Sill
 import "./List.css"
 
 function List(props){
+
+
     return (
         <div className="List-div" >
             <Date date={props.date} />
             <Name name={props.name}/>
             <Price price={props.price} />
-            <DeleteButton onDelete={props.onDelete} listID={props.id /**List Id Passed */} />
-            <EditButton onEdit={props.onEdit} listID={props.id} />
+            <DeleteButton onDelete={props.onDelete} listKey={props.id} />
+            <EditButton onEdit={props.onEdit} listKey={props.id} getEditableData={props.getEditableData} />
         </div>
     )
 }

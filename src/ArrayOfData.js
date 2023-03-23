@@ -10,6 +10,16 @@ let ARRAY_OF_DATA = [
     price: "300",
   },
   {
+    name: "Panjabi",
+    date: "2023-05-06",
+    price: "300",
+  },
+  {
+    name: "Food",
+    date: "2023-05-06",
+    price: "300",
+  },
+  {
     name: "Mobile",
     date: "2012-07-06",
     price: "2000",
@@ -28,3 +38,14 @@ let ARRAY_OF_DATA = [
 
 
 export default ARRAY_OF_DATA;
+ // Filter Year+Search 🤲🤲🤲🤲🤲🤲🤲
+//  function FilterYearSearch(e){
+//   let filteredData=DATASET.filter((value)=>{
+//     if(value.date.split("-")[0]==e.year || e.year=="ALL"){
+//       return value
+//     }
+    
+//   })
+//   console.log(filteredData);
+//   DATASET_FUNC(filteredData)
+// }

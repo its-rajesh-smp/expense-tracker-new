@@ -3,15 +3,14 @@ import "./InputField.css";
 import Card from "../Card/Card";
 
 function InputField(props) {
-  let [name, Fname] = useState();
-  let [date, Fdate] = useState();
-  let [price, Fprice] = useState();
 
-  
-  //!!! Getting Values But Whenever we type something in the input field due to onChage handlar it component is making re render again and again ❎❎❎
-  // console.log(props.onButtonEdit);
+  // Seting Defalut values
+  let [name, Fname] = useState(props.dataForEdit.name);
+  let [date, Fdate] = useState(props.dataForEdit.date);
+  let [price, Fprice] = useState(props.dataForEdit.price);
 
 
+  // Generating object of input data for sending in various parent components
   let newExpence = {
     name: name,
     date: date,
@@ -21,14 +20,19 @@ function InputField(props) {
 
   // This Function Will Call when btn submit is clicked in inputfield
   function setDataFunction(){
-    props.onButtonSubmit(newExpence)
-    props.onCloseInput()
-  }
 
-  /**
-   *  * Edit Fields Full Field 🆗🆗🆗🆗
-   * 
-   */
+    //if Edit Button pressed then we will get that work as ___EDIT___
+    if(props.dataForEdit.work=="___EDIT___"){ 
+      //Sending data to onButtonEdit child ➡️ Parent | edited data + key for localStorage update
+      props.onButtonEdit({key:props.dataForEdit.listKey , ...newExpence})  
+    }else{
+      // Sending Data to onButtonSubmit child ➡️ Parent
+      props.onButtonSubmit(newExpence)
+    }
+
+    //Closing The Input Field
+    props.onCloseInput()  
+  }
 
   
   return (
@@ -43,20 +47,21 @@ function InputField(props) {
             type="text"
             placeholder="Name"
             onChange={(e) => Fname(e.target.value)}
-            defaultValue={props.onButtonEdit.name /**Setting Default Value Getting From App.js Edit Field " " */}
+            value={name}
 
           />
           <input
             type="date"
             placeholder="Date"
             onChange={(e) => Fdate(e.target.value)}
-            defaultValue={props.onButtonEdit.date /**Setting Default Value Getting From App.js Edit Field " " */}
+           defaultValue={date}
           />
           <input
             type="number"
             placeholder="Price"
             onChange={(e) => Fprice(e.target.value)}
-            defaultValue={props.onButtonEdit.price /**Setting Default Value Getting From App.js Edit Field " " */}
+            value={price}
+           
           />
         </div>
         
