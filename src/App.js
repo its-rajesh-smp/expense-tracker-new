@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import InputField from "./InputField/InputField";
 import Container from "./Container/Container";
 import List from "./List/List";
 import { AddHoverBtn } from "./SillyComponents/SillyComponents";
 import ExpenseFilter from "./Filter/ExpenseFilter";
 import Chart from "./Charts/Chart";
+import AddEditState from "./Context/AddEditContext/AddEditState";
 
 function App() {
   //! Get Data From LocalStorage
@@ -109,6 +110,8 @@ function App() {
     });
   }
 
+    console.log("RELOAD");
+
   //! Run When Submit Button click on edit we will get value after edit
   function onButtonSubmitEditData(editValue) {
     // Replace Data in localstorage
@@ -126,7 +129,7 @@ function App() {
   }
 
   return (
-    <div>
+    <AddEditState>
       <AddHoverBtn
         onHoverBtnClick={() => {
           triggerInputFieldFunc(true);
@@ -168,7 +171,7 @@ function App() {
 
 
 
-    </div>
+    </AddEditState>
   );
 }
 
